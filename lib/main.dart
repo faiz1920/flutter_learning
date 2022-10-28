@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,116 +20,96 @@ class Layout extends StatelessWidget {
         ),
         /** container is like empty span/div in html*/
         body: Container(
-          /** set size of container */
-          // width: 500,
-          // height: 500,
-          /** align child element
-           * if alignment is removed child element will takeup parent width & height
-           */
-          // alignment: Alignment.center,
-          /** set margin to container */
-          margin: const EdgeInsets.all(20),
-          /** set padding to container */
-          padding: const EdgeInsets.all(10),
-          /** add style to container */
-          decoration: BoxDecoration(
-            /** background-color of container */
-            color: Colors.green.shade50,
-            /** border of container */
-            border: Border.all(color: Colors.red, width: 1.0, style: BorderStyle.solid, strokeAlign: StrokeAlign.inside),
-            /** border-radius of container */
-            /** rounded borders */
-            // borderRadius: const BorderRadius.all(
-            //   Radius.circular(15),
-            // ),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          /** Column */
-          // child: Column(
-          //   mainAxisSize: MainAxisSize.max,
-          //   /** MainAxis Alignment
-          //    * in case of Row main-axis is x-axis
-          //    * in case of Columns main-axis is y-axis
-          //    * MainAxis is like justify-content in css
-          //   */
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   /** CrossAxis Alignment
-          //    * in case of Row cross-axis is x-axis
-          //    * in case of Columns cross-axis is y-axis
-          //    * CrossAxis is like align-items in css
-          //   */
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: const [
-          //     ChildWidget(
-          //       color: Colors.amber,
-          //     ),
-          //     /** Expanded widget will work as grow property in flex css
-          //      * it automatically takesup all left over space
-          //      * also we can pass ration in which each Expanded widget will expand in available space
-          //      */
-          //     Expanded(
-          //       flex: 1,
-          //       child: ChildWidget(
-          //         size: 120.0,
-          //         color: Colors.red,
-          //       ),
-          //     ),
-          //     Expanded(
-          //       flex: 2,
-          //       child: ChildWidget(size: 50.0),
-          //     )
-          //   ],
-          // ),
-
-          /** Stack */
-          child: Stack(
-            children: [
-              const ChildWidget(
-                color: Colors.green,
-              ),
-              const Align(
-                alignment: Alignment.bottomLeft,
-                child: ChildWidget(
-                  color: Colors.yellow,
-                ),
-              ),
-              Container(
-                alignment: const Alignment(0, 0),
-                child: const ChildWidget(
-                  color: Colors.red,
-                ),
-              ),
-              /** Positioned widget works as Absolute position in css */
-              const Positioned(
-                  top: 50,
-                  right: 50,
-                  child: ChildWidget(
-                    color: Colors.teal,
-                  ))
-            ],
-          ),
+          color: Colors.white,
+          child: const Card(),
         ),
       ),
     );
   }
 }
 
-class ChildWidget extends StatelessWidget {
-  final color;
-  final size;
-
-  const ChildWidget({super.key, this.color = Colors.blue, this.size = 100.0});
+class Card extends StatelessWidget {
+  const Card({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size,
-      height: size,
-      color: color,
-      child: const Icon(
-        Icons.ac_unit,
+      margin: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.black12),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         color: Colors.white,
-        size: 40,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 200,
+            color: Colors.purple,
+            child: const Icon(Icons.search),
+          ),
+          const Text(
+            "Faiz Ansari",
+            style: TextStyle(fontSize: 40),
+          ),
+          const Text("Welcome"),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () => {
+                      log('message'),
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.red),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue.shade100),
+                    ),
+                    child: const Text("Click Me!"),
+                  ),
+                  TextButton(
+                    onPressed: () => {
+                      log('message'),
+                    },
+                    style: TextButton.styleFrom(foregroundColor: Colors.blue, backgroundColor: Colors.black12),
+                    child: const Text("Click Me!"),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => {
+                      log('message'),
+                    },
+                    style: TextButton.styleFrom(foregroundColor: Colors.black),
+                    child: const Text("Click Me!"),
+                  ),
+                  const ElevatedButton(
+                    onPressed: null,
+                    child: Text("Click Me!"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Click Me!"),
+                  ),
+                ],
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
